@@ -48,7 +48,7 @@ with st.sidebar:
 
 prompt = st.text_input("Escribe lo que quieras saber de la imagen")
 
-st.subheader("Dibuja el boceto en el panel  y presiona el botón para analizarla")
+st.subheader("Dibuja el acompañante que tendrás en tu viaje")
 
 
 # Create a canvas component
@@ -75,7 +75,7 @@ api_key = os.environ['OPENAI_API_KEY']
 # Initialize the OpenAI client with the API key
 client = OpenAI(api_key=api_key)
 
-analyze_button = st.button("Analiza la imagen", type="secondary")
+analyze_button = st.button("Crea tu historia", type="secondary")
 
 # Check if an image has been uploaded, if the API key is available, and if the button has been pressed
 if canvas_result.image_data is not None and api_key and analyze_button:
