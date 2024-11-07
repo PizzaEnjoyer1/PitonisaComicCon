@@ -1,1 +1,7 @@
+streamlit 
+openai
+tensorflow 
+matplotlib 
+streamlit-drawable-canvas== 0.9.2
+matplotlip
 
