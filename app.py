@@ -52,7 +52,7 @@ name = st.text_input("Escribe tu nombre, aventurero")
 selected_class = None
 
 
-st.subheader("Selecciona tu clase:")
+st.text("Selecciona tu clase:")
 
 # Creamos 4 columnas para organizar los botones de forma horizontal
 col1, col2, col3, col4 = st.columns(4)
