@@ -25,8 +25,8 @@ def encode_image_to_base64(image_path):
 
 
 # Streamlit 
-st.set_page_config(page_title='Pitonisa Imperial: Crea tu propia historia')
-st.title('Tablero Inteligente')
+st.set_page_config(page_title='Pitonisa Imperial')
+st.title('Pitonisa Imperial: Descubre tu destino')
 with st.sidebar:
 
   st.title("Cambia los parámetros de tu canvas")
