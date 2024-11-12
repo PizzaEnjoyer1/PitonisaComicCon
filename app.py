@@ -3,8 +3,12 @@ import streamlit as st
 import base64
 from openai import OpenAI
 import openai
+import time
+import glob
 #from PIL import Image
 import tensorflow as tf
+from gtts import gTTS
+from googletrans import Translator
 from PIL import Image, ImageOps
 import numpy as np
 import pandas as pd
