@@ -49,31 +49,33 @@ with st.sidebar:
 name = st.text_input("Escribe tu nombre, aventurero")
 
 # Inicializamos la variable para almacenar la opción seleccionada
-selected_option = None
+selected_class = None
 
 # Creamos 4 columnas para organizar los botones de forma horizontal
 col1, col2, col3, col4 = st.columns(4)
 
+st.subheader("Selecciona tu clase:")
+
 # Agrega botones en cada columna con iconos y define el valor que se almacena según la selección
 with col1:
     if st.button("🏠 Opción 1"):
-        selected_option = "Opción 1"
+        selected_class = "Opción 1"
 
 with col2:
     if st.button("🔍 Opción 2"):
-        selected_option = "Opción 2"
+        selected_class = "Opción 2"
 
 with col3:
     if st.button("📈 Opción 3"):
-        selected_option = "Opción 3"
+        selected_class = "Opción 3"
 
 with col4:
     if st.button("⚙️ Opción 4"):
-        selected_option = "Opción 4"
+        selected_class = "Opción 4"
 
 # Mostrar el valor almacenado para confirmar la selección
 if selected_option:
-    st.write(f"Has seleccionado: {selected_option}")
+    st.write(f"Has seleccionado: {selected_class}")
 
 prompt = st.text_input("Escribe lo que quieras saber de la imagen")
 
