@@ -46,6 +46,8 @@ with st.sidebar:
   bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
 
 
+name = st.text_input("Escribe tu nombre, aventurero")
+
 prompt = st.text_input("Escribe lo que quieras saber de la imagen")
 
 st.subheader("Dibuja el acompañante que tendrás en tu viaje")
