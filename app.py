@@ -79,9 +79,8 @@ with col4:
 if selected_class:
     st.write(f"{name}, has seleccionado: {selected_class}")
 
-prompt = st.text_input("Escribe lo que quieras saber de la imagen")
 
-st.subheader("Dibuja el acompañante que tendrás en tu viaje")
+st.text("Dibuja el acompañante que tendrás en tu viaje")
 
 
 # Create a canvas component
