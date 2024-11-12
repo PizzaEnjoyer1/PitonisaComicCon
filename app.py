@@ -51,10 +51,12 @@ name = st.text_input("Escribe tu nombre, aventurero")
 # Inicializamos la variable para almacenar la opción seleccionada
 selected_class = None
 
+
+st.subheader("Selecciona tu clase:")
+
 # Creamos 4 columnas para organizar los botones de forma horizontal
 col1, col2, col3, col4 = st.columns(4)
 
-st.subheader("Selecciona tu clase:")
 
 # Agrega botones en cada columna con iconos y define el valor que se almacena según la selección
 with col1:
