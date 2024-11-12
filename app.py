@@ -77,7 +77,7 @@ with col4:
 
 # Mostrar el valor almacenado para confirmar la selección
 if selected_class:
-    st.write(f"Has seleccionado: {selected_class}")
+    st.write(f"{name}, has seleccionado: {selected_class}")
 
 prompt = st.text_input("Escribe lo que quieras saber de la imagen")
 
