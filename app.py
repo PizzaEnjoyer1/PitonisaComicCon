@@ -80,8 +80,12 @@ with col4:
         selected_class = "Opción 4"
 
 # Mostrar el valor almacenado para confirmar la selección
-if selected_class:
+if selected_class and name != None:
     st.write(f"{name}, has seleccionado: {selected_class}")
+
+else:
+    st.write("Por favor, escribe tu nombre")
+    
 
 
 st.text("Dibuja el acompañante que tendrás en tu viaje")
