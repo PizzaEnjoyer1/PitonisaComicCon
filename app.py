@@ -59,7 +59,7 @@ selected_class = None
 st.text("Selecciona tu clase:")
 
 # Creamos 4 columnas para organizar los botones de forma horizontal
-col1, col2, col3, col4, col5 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 
 
 # Agrega botones en cada columna con iconos y define el valor que se almacena según la selección
