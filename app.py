@@ -121,6 +121,15 @@ client = OpenAI(api_key=api_key)
 
 analyze_button = st.button("Crea tu historia", type="secondary")
 
+def text_to_speech(text, lg):
+    tts = gTTS(text, lang=lg)
+    try:
+        my_file_name = text[:20]
+    except:
+        my_file_name = "audio"
+    tts.save(f"temp/{my_file_name}.mp3")
+    return my_file_name, text
+
 # Check if an image has been uploaded, if the API key is available, and if the button has been pressed
 if canvas_result.image_data is not None and api_key and analyze_button:
 
@@ -190,4 +199,59 @@ else:
 
     if not api_key:
         st.warning("Por favor ingresa tu API key.")
+
+# Botón para convertir el texto a audio
+if st.button("Convertir a Audio"):
+    if full_response.strip() != "":  # Usamos full_response como el texto generado por la IA
+        # Muestra el texto generado
+        st.subheader("Texto generado:")
+        st.write(full_response)
+
+        # Crea un contenedor vacío para el GIF de carga
+        gif_placeholder = st.empty()
+
+        # Inserta el GIF de carga en el contenedor vacío
+        with gif_placeholder:
+            st.markdown(
+                f'<img src="data:image/gif;base64,{base64.b64encode(open(loading_gif, "rb").read()).decode()}" width="100" alt="Loading...">',
+                unsafe_allow_html=True
+            )
+        
+        # Simula el tiempo de procesamiento (ajustable si es necesario)
+        time.sleep(2)  
+        
+        # Conversión del texto a audio (en español)
+        result, output_text = text_to_speech(full_response, 'es')
+        
+        # Una vez que termina el procesamiento, vacía el contenedor del GIF
+        gif_placeholder.empty()
+        
+        # Cargar y reproducir el archivo de audio generado
+        audio_file = open(f"temp/{result}.mp3", "rb")
+        audio_bytes = audio_file.read()
+        st.markdown("## Tu audio:")
+        st.audio(audio_bytes, format="audio/mp3", start_time=0)
+
+        # Descargar archivo de audio
+        with open(f"temp/{result}.mp3", "rb") as f:
+            data = f.read()
+
+        def get_binary_file_downloader_html(bin_file, file_label='Audio File'):
+            bin_str = base64.b64encode(data).decode()
+            href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
+            return href
+
+        st.markdown(get_binary_file_downloader_html(f"temp/{result}.mp3", "Audio File"), unsafe_allow_html=True)
+
+def remove_files(n):
+    mp3_files = glob.glob("temp/*mp3")
+    if len(mp3_files) != 0:
+        now = time.time()
+        n_days = n * 86400  # Convertir los días a segundos
+        for f in mp3_files:
+            if os.stat(f).st_mtime < now - n_days:
+                os.remove(f)
+
+# Llamada a la función para eliminar archivos de más de 7 días
+remove_files(7)
 
