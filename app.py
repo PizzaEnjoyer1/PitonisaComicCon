@@ -59,25 +59,29 @@ selected_class = None
 st.text("Selecciona tu clase:")
 
 # Creamos 4 columnas para organizar los botones de forma horizontal
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(4)
 
 
 # Agrega botones en cada columna con iconos y define el valor que se almacena según la selección
 with col1:
-    if st.button("🏠 Opción 1"):
-        selected_class = "Opción 1"
+    if st.button("🛡️ Paladín"):
+        selected_class = "Paladín"
 
 with col2:
-    if st.button("🔍 Opción 2"):
-        selected_class = "Opción 2"
+    if st.button("🧙 Mago"):
+        selected_class = "Mago"
 
 with col3:
-    if st.button("📈 Opción 3"):
-        selected_class = "Opción 3"
+    if st.button("🏹 Arquero"):
+        selected_class = "Arquero"
 
 with col4:
-    if st.button("⚙️ Opción 4"):
-        selected_class = "Opción 4"
+    if st.button("🗡️ Caballero"):
+        selected_class = "Caballero"
+
+with col5:
+    if st.button("🩹 Curandero"):
+        selected_class = "Curandero"
 
 # Mostrar el valor almacenado para confirmar la selección
 if selected_class and name != None:
