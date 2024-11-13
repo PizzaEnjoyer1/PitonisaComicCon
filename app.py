@@ -243,6 +243,9 @@ if st.button("Convertir a Audio") and full_response != None:
 
         st.markdown(get_binary_file_downloader_html(f"temp/{result}.mp3", "Audio File"), unsafe_allow_html=True)
 
+else:
+    st.write("XD")
+
 def remove_files(n):
     mp3_files = glob.glob("temp/*mp3")
     if len(mp3_files) != 0:
