@@ -30,6 +30,7 @@ def encode_image_to_base64(image_path):
 # Streamlit 
 st.set_page_config(page_title='Pitonisa Imperial')
 st.title('Pitonisa Imperial: Descubre tu destino')
+st.image("pitonisa.jpg")
 with st.sidebar:
 
   st.title("Cambia los parámetros de tu canvas")
