@@ -158,13 +158,13 @@ else:
         st.warning("Por favor ingresa tu API key.")
 
 if st.button("Convertir a Audio"):
-    if mi_respuesta != "":
+    if full_response.strip() != "":
         st.subheader("Texto generado:")
-        st.write(mi_respuesta)
+        st.write(full_response)
         gif_placeholder = st.empty()
 
         time.sleep(2)
-        result, output_text = text_to_speech(mi_respuesta, 'es')
+        result, output_text = text_to_speech(full_response, 'es')
         gif_placeholder.empty()
         audio_file = open(f"temp/{result}.mp3", "rb")
         audio_bytes = audio_file.read()
@@ -190,4 +190,3 @@ def remove_files(n):
                 os.remove(f)
 
 remove_files(7)
-
