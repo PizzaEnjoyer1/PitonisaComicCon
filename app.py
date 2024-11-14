@@ -66,23 +66,23 @@ selected_class = ""
 
 with col1:
     if st.button("🛡️ Paladín"):
-        selected_class = "Paladín"
+        selected_class = "paladín"
 
 with col2:
     if st.button("🧙 Mago"):
-        selected_class = "Mago"
+        selected_class = "mago"
 
 with col3:
     if st.button("🏹 Arquero"):
-        selected_class = "Arquero"
+        selected_class = "arquero"
 
 with col4:
     if st.button("🗡️ Caballero"):
-        selected_class = "Caballero"
+        selected_class = "caballero"
 
 with col5:
     if st.button("🩹 Curandero"):
-        selected_class = "Curandero"
+        selected_class = "curandero"
 
 # Mostrar el valor almacenado para confirmar la selección
 if selected_class != None and name != None:
