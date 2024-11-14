@@ -197,7 +197,7 @@ else:
         st.warning("Por favor ingresa tu API key.")
 
 # Botón para convertir el texto a audio
-if st.button("Convertir a Audio") and full_response != None:
+if st.button("Convertir a Audio"):
     if full_response.strip() != "":  # Usamos full_response como el texto generado por la IA
         # Muestra el texto generado
         st.subheader("Texto generado:")
