@@ -94,6 +94,8 @@ else:
 
 st.text("Dibuja el acompañante que tendrás en tu viaje")
 
+st.text(f"{selected_class} esa es la clase")
+
 
 # Create a canvas component
 canvas_result = st_canvas(
