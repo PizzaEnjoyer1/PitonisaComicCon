@@ -1,23 +1,18 @@
 import os
 import streamlit as st
 import base64
-from openai import OpenAI
 import openai
 import time
 import glob
 from gtts import gTTS
-from PIL import Image, ImageOps
+from PIL import Image
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 from streamlit_drawable_canvas import st_canvas
 
-# Definir la variable global 'full_response'
+# Inicializamos una variable global 'full_response' vacía
 full_response = ""
 
-Expert = " "
-profile_imgenh = " "
-
+# Función para codificar la imagen en base64
 def encode_image_to_base64(image_path):
     try:
         with open(image_path, "rb") as image_file:
@@ -26,7 +21,65 @@ def encode_image_to_base64(image_path):
     except FileNotFoundError:
         return "Error: La imagen no se encontró en la ruta especificada."
 
-# Streamlit 
+# Función para convertir texto a audio con gTTS
+def text_to_speech(text, lg):
+    tts = gTTS(text, lang=lg)
+    try:
+        my_file_name = text[:20]  # Tomar los primeros 20 caracteres como nombre de archivo
+    except:
+        my_file_name = "audio"
+    tts.save(f"temp/{my_file_name}.mp3")
+    return my_file_name, text
+
+# Función para generar la historia basada en la imagen y la clase
+def generate_story(name, class_name, canvas_result, api_key):
+    global full_response  # Usamos la variable global para almacenar la respuesta
+
+    if canvas_result.image_data is not None and api_key:
+        with st.spinner("Creando tu historia ..."):
+            # Procesamos la imagen del canvas
+            input_numpy_array = np.array(canvas_result.image_data)
+            input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
+            input_image.save('img.png')
+            base64_image = encode_image_to_base64("img.png")
+
+            # Creamos el prompt para OpenAI
+            prompt_text = (f"Comenzarás la historia así: {name} es un/a {class_name}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media que no exceda el límite de 500 tokens.")
+
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt_text},
+                        {
+                            "type": "image_url",
+                            "image_url": f"data:image/png;base64,{base64_image}",
+                        },
+                    ],
+                }
+            ]
+
+            try:
+                # Llamada a la API de OpenAI para generar la historia
+                message_placeholder = st.empty()
+                response = openai.chat.completions.create(
+                    model="gpt-4",  # Usar un modelo de OpenAI adecuado
+                    messages=messages,
+                    max_tokens=10  # Limitar la cantidad de tokens
+                )
+
+                # Si OpenAI devuelve una respuesta válida, la asignamos a 'full_response'
+                if response.choices[0].message.content is not None:
+                    full_response = response.choices[0].message.content
+                    message_placeholder.markdown(full_response + "▌")
+                message_placeholder.markdown(full_response)
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+    else:
+        if not api_key:
+            st.warning("Por favor ingresa tu API key.")
+
+# Configuración de la página de Streamlit
 st.set_page_config(page_title='Pitonisa Imperial')
 st.title('Pitonisa Imperial: Descubre tu destino')
 st.image("pitonisa.jpg")
@@ -91,103 +144,12 @@ canvas_result = st_canvas(
 ke = st.text_input('Ingresa tu Clave')
 os.environ['OPENAI_API_KEY'] = ke
 api_key = os.environ['OPENAI_API_KEY']
-client = OpenAI(api_key=api_key)
 
 analyze_button = st.button("Crea tu historia", type="secondary")
 
-def text_to_speech(text, lg):
-    tts = gTTS(text, lang=lg)
-    try:
-        my_file_name = text[:20]
-    except:
-        my_file_name = "audio"
-    tts.save(f"temp/{my_file_name}.mp3")
-    return my_file_name, text
-
-# Aseguramos que 'full_response' es global
-def generate_story():
-    global full_response  # Declaramos la variable global antes de asignarle un valor
-
-    if canvas_result.image_data is not None and api_key and analyze_button:
-        with st.spinner("Creando tu historia ..."):
-            input_numpy_array = np.array(canvas_result.image_data)
-            input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
-            input_image.save('img.png')
-            base64_image = encode_image_to_base64("img.png")
-            prompt_text = (f"Comenzarás la historia así: {name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media que no exceda el límite de 500 tokens")
-
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": prompt_text},
-                        {
-                            "type": "image_url",
-                            "image_url": f"data:image/png;base64,{base64_image}",
-                        },
-                    ],
-                }
-            ]
-
-            try:
-                message_placeholder = st.empty()
-                response = openai.chat.completions.create(
-                    model="gpt-4o-mini",
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": [
-                                {"type": "text", "text": prompt_text},
-                                {
-                                    "type": "image_url",
-                                    "image_url": {
-                                        "url": f"data:image/png;base64,{base64_image}",
-                                    },
-                                },
-                            ],
-                        }
-                    ],
-                    max_tokens=10,  # Cambié el valor de max_tokens
-                )
-                if response.choices[0].message.content is not None:
-                    full_response = response.choices[0].message.content
-                    message_placeholder.markdown(full_response + "▌")
-                message_placeholder.markdown(full_response)
-                if Expert == profile_imgenh:
-                    st.session_state.mi_respuesta = full_response
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
-    else:
-        if not api_key:
-            st.warning("Por favor ingresa tu API key.")
-
-# Llamar a la función para generar la historia
-generate_story()
-
-# Función para convertir el texto generado a audio
-if st.button("Convertir a Audio"):
-
-    if full_response != "":
-        st.subheader("Texto generado:")
-        st.write(full_response)
-        gif_placeholder = st.empty()
-
-        time.sleep(2)
-        result, output_text = text_to_speech(full_response, 'es')
-        gif_placeholder.empty()
-        audio_file = open(f"temp/{result}.mp3", "rb")
-        audio_bytes = audio_file.read()
-        st.markdown("## Tu audio:")
-        st.audio(audio_bytes, format="audio/mp3", start_time=0)
-        with open(f"temp/{result}.mp3", "rb") as f:
-            data = f.read()
-
-        def get_binary_file_downloader_html(bin_file, file_label='Audio File'):
-            bin_str = base64.b64encode(data).decode()
-            href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
-            return href
-        st.markdown(get_binary_file_downloader_html(f"temp/{result}.mp3", "Audio File"), unsafe_allow_html=True)
-
+# Ejecutar la generación de la historia cuando se presiona el botón
+if analyze_button:
+    generate_story(name, st.session_state.selected_class, canvas_result, api_key)
 
 # Función para eliminar archivos temporales
 def remove_files(n):
@@ -200,3 +162,31 @@ def remove_files(n):
                 os.remove(f)
 
 remove_files(7)
+
+# Convertir a audio cuando se presiona el botón
+if st.button("Convertir a Audio"):
+
+    if full_response.strip() != "":
+        st.subheader("Texto generado:")
+        st.write(full_response)
+        gif_placeholder = st.empty()
+
+        time.sleep(2)
+        result, output_text = text_to_speech(full_response, 'es')
+        gif_placeholder.empty()
+
+        audio_file = open(f"temp/{result}.mp3", "rb")
+        audio_bytes = audio_file.read()
+
+        st.markdown("## Tu audio:")
+        st.audio(audio_bytes, format="audio/mp3", start_time=0)
+
+        with open(f"temp/{result}.mp3", "rb") as f:
+            data = f.read()
+
+        def get_binary_file_downloader_html(bin_file, file_label='Audio File'):
+            bin_str = base64.b64encode(data).decode()
+            href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
+            return href
+
+        st.markdown(get_binary_file_downloader_html(f"temp/{result}.mp3", "Audio File"), unsafe_allow_html=True)
