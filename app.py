@@ -50,7 +50,6 @@ with st.sidebar:
   
   bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
 
-  st.text(name)
 
 
 
