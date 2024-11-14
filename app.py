@@ -132,7 +132,7 @@ def text_to_speech(text, lg):
 # Check if an image has been uploaded, if the API key is available, and if the button has been pressed
 if canvas_result.image_data is not None and api_key and analyze_button:
 
-    with st.spinner("Analizando ..."):
+    with st.spinner("Creando tu historia ..."):
         # Encode the image
         input_numpy_array = np.array(canvas_result.image_data)
         input_image = Image.fromarray(input_numpy_array.astype('uint8'),'RGBA')
