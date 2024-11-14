@@ -81,7 +81,7 @@ with col5:
         selected_class = "Curandero"
 
 # Mostrar el valor almacenado para confirmar la selección
-if selected_class and name != None:
+if selected_class != None and name != None:
     st.write(f"{name}, has seleccionado: {selected_class}")
 
 else:
