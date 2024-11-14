@@ -156,7 +156,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
 else:
     if not api_key:
         st.warning("Por favor ingresa tu API key.")
-
+"""
 if st.button("Convertir a Audio"):
     if full_response.strip() != "":
         st.subheader("Texto generado:")
@@ -194,3 +194,4 @@ def remove_files(n):
                 os.remove(f)
 
 remove_files(7)
+"""
