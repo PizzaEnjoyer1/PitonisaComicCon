@@ -55,6 +55,7 @@ with st.sidebar:
 
 name = st.text_input("Escribe tu nombre, aventurero")
 
+st.subtitle("Dibuja el acompañante que tendrás en tu viaje")
 
 canvas_result = st_canvas(
     fill_color=fill_color,  # Fixed fill color with some opacity
@@ -106,10 +107,6 @@ if selected_class != None and name != None:
 else:
     st.write("Por favor, escribe tu nombre")
     
-
-
-st.text("Dibuja el acompañante que tendrás en tu viaje")
-
 
 # Create a canvas component
 
