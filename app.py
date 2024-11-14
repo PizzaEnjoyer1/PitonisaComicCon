@@ -144,7 +144,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
  
         base64_image = encode_image_to_base64("img.png")
             
-        prompt_text = (f"Comenzarás la historia así: {name} es un/a {user_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
+        prompt_text = (f"Comenzarás la historia así: {name} es un/a {selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
     
       # Create the payload for the completion request
         messages = [
@@ -181,7 +181,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
                   }
                 ],
               max_tokens=500,
-              user_class=selected_class
+            
               )
             #response.choices[0].message.content
             if response.choices[0].message.content is not None:
