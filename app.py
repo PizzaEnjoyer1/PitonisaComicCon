@@ -156,17 +156,13 @@ if canvas_result.image_data is not None and api_key and analyze_button:
 else:
     if not api_key:
         st.warning("Por favor ingresa tu API key.")
-"""
+
 if st.button("Convertir a Audio"):
     if full_response.strip() != "":
         st.subheader("Texto generado:")
         st.write(full_response)
         gif_placeholder = st.empty()
-        with gif_placeholder:
-            st.markdown(
-                f'<img src="data:image/gif;base64,{base64.b64encode(open(loading_gif, "rb").read()).decode()}" width="100" alt="Loading...">',
-                unsafe_allow_html=True
-            )
+
         time.sleep(2)
         result, output_text = text_to_speech(full_response, 'es')
         gif_placeholder.empty()
@@ -194,4 +190,4 @@ def remove_files(n):
                 os.remove(f)
 
 remove_files(7)
-"""
+
