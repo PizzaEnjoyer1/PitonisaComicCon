@@ -17,6 +17,8 @@ from streamlit_drawable_canvas import st_canvas
 
 Expert=" "
 profile_imgenh=" "
+
+current_class=" "
     
 def encode_image_to_base64(image_path):
     try:
@@ -48,6 +50,8 @@ with st.sidebar:
   fill_color = st.color_picker("Selecciona el color de relleno", "#000000")
   
   bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
+
+  st.text(current_class)
 
 
 name = st.text_input("Escribe tu nombre, aventurero")
@@ -133,6 +137,8 @@ def text_to_speech(text, lg):
 # Check if an image has been uploaded, if the API key is available, and if the button has been pressed
 if canvas_result.image_data is not None and api_key and analyze_button:
 
+    current_class = selected_class
+
     with st.spinner("Creando tu historia ..."):
         # Encode the image
         input_numpy_array = np.array(canvas_result.image_data)
@@ -143,7 +149,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
  
         base64_image = encode_image_to_base64("img.png")
             
-        prompt_text = (f"Comenzarás la historia así: {name} es un/a {selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
+        prompt_text = (f"Comenzarás la historia así: {name} es un/a {current_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
     
       # Create the payload for the completion request
         messages = [
