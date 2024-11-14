@@ -106,7 +106,7 @@ def text_to_speech(text, lg):
 
 # Aseguramos que 'full_response' es global
 def generate_story():
-    global full_response
+    global full_response  # Declaramos la variable global antes de asignarle un valor
 
     if canvas_result.image_data is not None and api_key and analyze_button:
         with st.spinner("Creando tu historia ..."):
