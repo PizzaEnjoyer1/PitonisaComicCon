@@ -76,9 +76,6 @@ col1, col2, col3, col4, col5 = st.columns(5)
 
 
 
-# Agrega botones en cada columna con iconos y define el valor que se almacena según la selección
-selected_class = None;
-
 
 with col1:
     if st.button("🛡️ Paladín"):
