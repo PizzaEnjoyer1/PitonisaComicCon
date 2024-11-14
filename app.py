@@ -53,7 +53,7 @@ with st.sidebar:
 name = st.text_input("Escribe tu nombre, aventurero")
 
 # Inicializamos la variable para almacenar la opción seleccionada
-selected_class = None
+selected_class = "Aventurero"
 
 
 st.text("Selecciona tu clase:")
