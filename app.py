@@ -158,7 +158,7 @@ else:
         st.warning("Por favor ingresa tu API key.")
 
 if st.button("Convertir a Audio"):
-    if mi_respuesta.strip() != "":
+    if mi_respuesta != "":
         st.subheader("Texto generado:")
         st.write(mi_respuesta)
         gif_placeholder = st.empty()
