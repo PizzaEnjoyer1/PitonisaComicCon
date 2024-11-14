@@ -166,7 +166,6 @@ generate_story()
 
 # Función para convertir el texto generado a audio
 if st.button("Convertir a Audio"):
-    global full_response  # Aseguramos que full_response es global
 
     if full_response.strip() != "":
         st.subheader("Texto generado:")
