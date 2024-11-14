@@ -143,7 +143,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
                         ],
                     }
                 ],
-                max_tokens=500,
+                max_tokens=10,
             )
             if response.choices[0].message.content is not None:
                 full_response += response.choices[0].message.content
@@ -158,13 +158,13 @@ else:
         st.warning("Por favor ingresa tu API key.")
 
 if st.button("Convertir a Audio"):
-    if full_response.strip() != "":
+    if mi_respuesta.strip() != "":
         st.subheader("Texto generado:")
-        st.write(full_response)
+        st.write(mi_respuesta)
         gif_placeholder = st.empty()
 
         time.sleep(2)
-        result, output_text = text_to_speech(full_response, 'es')
+        result, output_text = text_to_speech(mi_respuesta, 'es')
         gif_placeholder.empty()
         audio_file = open(f"temp/{result}.mp3", "rb")
         audio_bytes = audio_file.read()
