@@ -72,8 +72,7 @@ with col5:
 # Mostrar el valor almacenado para confirmar la selección
 if st.session_state.get("selected_class", None) is not None and name != None:
     st.write(f"{name}, has seleccionado: {st.session_state.selected_class}")
-else:
-    st.write("Por favor, escribe tu nombre")
+
 
 st.text("Dibuja el acompañante que tendrás en tu viaje")
 
