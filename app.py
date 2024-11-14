@@ -50,8 +50,6 @@ with st.sidebar:
   
   bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
 
-  st.text(current_class)
-
 
 name = st.text_input("Escribe tu nombre, aventurero")
 
