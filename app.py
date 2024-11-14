@@ -167,7 +167,7 @@ generate_story()
 # Función para convertir el texto generado a audio
 if st.button("Convertir a Audio"):
 
-    if full_response.strip() != "":
+    if full_response != "":
         st.subheader("Texto generado:")
         st.write(full_response)
         gif_placeholder = st.empty()
