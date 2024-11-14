@@ -10,8 +10,10 @@ from PIL import Image, ImageOps
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import streamlit as st
 from streamlit_drawable_canvas import st_canvas
+
+# Definir la variable global 'full_response'
+full_response = ""
 
 Expert = " "
 profile_imgenh = " "
@@ -41,7 +43,6 @@ with st.sidebar:
     bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
 
 name = st.text_input("Escribe tu nombre, aventurero")
-
 
 st.text("Selecciona tu clase:")
 
@@ -103,61 +104,70 @@ def text_to_speech(text, lg):
     tts.save(f"temp/{my_file_name}.mp3")
     return my_file_name, text
 
-if canvas_result.image_data is not None and api_key and analyze_button:
-    with st.spinner("Creando tu historia ..."):
-        input_numpy_array = np.array(canvas_result.image_data)
-        input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
-        input_image.save('img.png')
-        base64_image = encode_image_to_base64("img.png")
-        prompt_text = (f"Comenzarás la historia así: {name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media que no exceda el límite de 500 tokens")
+# Aseguramos que 'full_response' es global
+def generate_story():
+    global full_response
 
-        messages = [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": prompt_text},
-                    {
-                        "type": "image_url",
-                        "image_url": f"data:image/png;base64,{base64_image}",
-                    },
-                ],
-            }
-        ]
+    if canvas_result.image_data is not None and api_key and analyze_button:
+        with st.spinner("Creando tu historia ..."):
+            input_numpy_array = np.array(canvas_result.image_data)
+            input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
+            input_image.save('img.png')
+            base64_image = encode_image_to_base64("img.png")
+            prompt_text = (f"Comenzarás la historia así: {name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media que no exceda el límite de 500 tokens")
 
-        try:
-            full_response = ""
-            message_placeholder = st.empty()
-            response = openai.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": prompt_text},
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:image/png;base64,{base64_image}",
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt_text},
+                        {
+                            "type": "image_url",
+                            "image_url": f"data:image/png;base64,{base64_image}",
+                        },
+                    ],
+                }
+            ]
+
+            try:
+                message_placeholder = st.empty()
+                response = openai.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "text", "text": prompt_text},
+                                {
+                                    "type": "image_url",
+                                    "image_url": {
+                                        "url": f"data:image/png;base64,{base64_image}",
+                                    },
                                 },
-                            },
-                        ],
-                    }
-                ],
-                max_tokens=10,
-            )
-            if response.choices[0].message.content is not None:
-                full_response += response.choices[0].message.content
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-            if Expert == profile_imgenh:
-                st.session_state.mi_respuesta = response.choices[0].message.content
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
-else:
-    if not api_key:
-        st.warning("Por favor ingresa tu API key.")
+                            ],
+                        }
+                    ],
+                    max_tokens=500,  # Cambié el valor de max_tokens
+                )
+                if response.choices[0].message.content is not None:
+                    full_response = response.choices[0].message.content
+                    message_placeholder.markdown(full_response + "▌")
+                message_placeholder.markdown(full_response)
+                if Expert == profile_imgenh:
+                    st.session_state.mi_respuesta = full_response
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+    else:
+        if not api_key:
+            st.warning("Por favor ingresa tu API key.")
 
+# Llamar a la función para generar la historia
+generate_story()
+
+# Función para convertir el texto generado a audio
 if st.button("Convertir a Audio"):
+    global full_response  # Aseguramos que full_response es global
+
     if full_response.strip() != "":
         st.subheader("Texto generado:")
         st.write(full_response)
@@ -172,6 +182,7 @@ if st.button("Convertir a Audio"):
         st.audio(audio_bytes, format="audio/mp3", start_time=0)
         with open(f"temp/{result}.mp3", "rb") as f:
             data = f.read()
+
         def get_binary_file_downloader_html(bin_file, file_label='Audio File'):
             bin_str = base64.b64encode(data).decode()
             href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
@@ -180,6 +191,7 @@ if st.button("Convertir a Audio"):
 else:
     st.write("XD")
 
+# Función para eliminar archivos temporales
 def remove_files(n):
     mp3_files = glob.glob("temp/*mp3")
     if len(mp3_files) != 0:
