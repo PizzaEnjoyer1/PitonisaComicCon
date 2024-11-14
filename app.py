@@ -109,7 +109,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
         input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
         input_image.save('img.png')
         base64_image = encode_image_to_base64("img.png")
-        prompt_text = (f"Comenzarás la historia así: {name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
+        prompt_text = (f"Comenzarás la historia así: {name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media que no exceda el límite de 500 tokens")
 
         messages = [
             {
