@@ -147,7 +147,7 @@ def generate_story():
                             ],
                         }
                     ],
-                    max_tokens=500,  # Cambié el valor de max_tokens
+                    max_tokens=10,  # Cambié el valor de max_tokens
                 )
                 if response.choices[0].message.content is not None:
                     full_response = response.choices[0].message.content
