@@ -114,7 +114,7 @@ def generate_story():
             input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
             input_image.save('img.png')
             base64_image = encode_image_to_base64("img.png")
-            prompt_text = (f"Comenzarás la historia así: {name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media que no exceda el límite de 500 tokens")
+            prompt_text = (f"{name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media. Comienza la historia así: {name} es un/a {st.session_state.selected_class}. ")
 
             messages = [
                 {
