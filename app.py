@@ -42,7 +42,7 @@ with st.sidebar:
     fill_color = st.color_picker("Selecciona el color de relleno", "#000000")
     bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
 
-name = st.text_input("Escribe tu nombre, aventurero")
+name = st.text_input("Aventurero, escribe tu nombre")
 
 st.text("Selecciona tu clase:")
 
