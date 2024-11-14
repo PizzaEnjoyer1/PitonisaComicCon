@@ -62,6 +62,20 @@ st.text("Selecciona tu clase:")
 col1, col2, col3, col4, col5 = st.columns(5)
 
 
+canvas_result = st_canvas(
+    fill_color=fill_color,  # Fixed fill color with some opacity
+    stroke_width=stroke_width,
+    stroke_color=stroke_color,
+    background_color=bg_color,
+    height=720,
+    width=1280,
+    #background_image= None #Image.open(bg_image) if bg_image else None,
+    drawing_mode=drawing_mode,
+    key="canvas",
+)
+
+
+
 # Agrega botones en cada columna con iconos y define el valor que se almacena según la selección
 selected_class = None;
 
@@ -99,17 +113,6 @@ st.text("Dibuja el acompañante que tendrás en tu viaje")
 
 
 # Create a canvas component
-canvas_result = st_canvas(
-    fill_color=fill_color,  # Fixed fill color with some opacity
-    stroke_width=stroke_width,
-    stroke_color=stroke_color,
-    background_color=bg_color,
-    height=720,
-    width=1280,
-    #background_image= None #Image.open(bg_image) if bg_image else None,
-    drawing_mode=drawing_mode,
-    key="canvas",
-)
 
 ke = st.text_input('Ingresa tu Clave')
 
