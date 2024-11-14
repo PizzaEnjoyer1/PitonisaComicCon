@@ -56,12 +56,6 @@ with st.sidebar:
 name = st.text_input("Escribe tu nombre, aventurero")
 
 
-st.text("Selecciona tu clase:")
-
-# Creamos 4 columnas para organizar los botones de forma horizontal
-col1, col2, col3, col4, col5 = st.columns(5)
-
-
 canvas_result = st_canvas(
     fill_color=fill_color,  # Fixed fill color with some opacity
     stroke_width=stroke_width,
@@ -73,6 +67,11 @@ canvas_result = st_canvas(
     drawing_mode=drawing_mode,
     key="canvas",
 )
+
+st.text("Selecciona tu clase:")
+
+# Creamos 4 columnas para organizar los botones de forma horizontal
+col1, col2, col3, col4, col5 = st.columns(5)
 
 
 
