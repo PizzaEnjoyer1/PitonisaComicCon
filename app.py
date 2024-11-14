@@ -109,12 +109,10 @@ canvas_result = st_canvas(
 )
 
 ke = st.text_input('Ingresa tu Clave')
-#os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
-os.environ['OPENAI_API_KEY'] = ke
 
 
 # Retrieve the OpenAI API Key from secrets
-api_key = os.environ['OPENAI_API_KEY']
+api_key = ke
 
 # Initialize the OpenAI client with the API key
 client = OpenAI(api_key=api_key)
