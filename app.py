@@ -94,8 +94,6 @@ else:
 
 st.text("Dibuja el acompañante que tendrás en tu viaje")
 
-st.text(f"{selected_class} esa es la clase")
-
 
 # Create a canvas component
 canvas_result = st_canvas(
@@ -144,7 +142,7 @@ if canvas_result.image_data is not None and api_key and analyze_button:
  
         base64_image = encode_image_to_base64("img.png")
             
-        prompt_text = (f"{name} es un/a {selected_class}. Comienza diciendo qué es el personaje (MAGO, PALADIN, ARQUERO, CABALLERO, CURANDERO). En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
+        prompt_text = (f"{name} es un/a {selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media")
     
       # Create the payload for the completion request
         messages = [
