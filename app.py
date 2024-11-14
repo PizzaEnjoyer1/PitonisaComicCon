@@ -42,18 +42,6 @@ with st.sidebar:
 
 name = st.text_input("Escribe tu nombre, aventurero")
 
-st.text("Dibuja el acompañante que tendrás en tu viaje")
-
-canvas_result = st_canvas(
-    fill_color=fill_color,
-    stroke_width=stroke_width,
-    stroke_color=stroke_color,
-    background_color=bg_color,
-    height=720,
-    width=1280,
-    drawing_mode=drawing_mode,
-    key="canvas",
-)
 
 st.text("Selecciona tu clase:")
 
@@ -85,6 +73,19 @@ if st.session_state.get("selected_class", None) is not None and name != None:
     st.write(f"{name}, has seleccionado: {st.session_state.selected_class}")
 else:
     st.write("Por favor, escribe tu nombre")
+
+st.text("Dibuja el acompañante que tendrás en tu viaje")
+
+canvas_result = st_canvas(
+    fill_color=fill_color,
+    stroke_width=stroke_width,
+    stroke_color=stroke_color,
+    background_color=bg_color,
+    height=720,
+    width=1280,
+    drawing_mode=drawing_mode,
+    key="canvas",
+)
 
 ke = st.text_input('Ingresa tu Clave')
 os.environ['OPENAI_API_KEY'] = ke
