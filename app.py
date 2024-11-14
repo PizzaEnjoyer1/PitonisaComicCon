@@ -187,8 +187,7 @@ if st.button("Convertir a Audio"):
             href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
             return href
         st.markdown(get_binary_file_downloader_html(f"temp/{result}.mp3", "Audio File"), unsafe_allow_html=True)
-else:
-    st.write("XD")
+
 
 # Función para eliminar archivos temporales
 def remove_files(n):
