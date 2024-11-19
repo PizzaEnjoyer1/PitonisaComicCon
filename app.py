@@ -22,7 +22,9 @@ from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
 import platform
 
-os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+ke = st.text_input('Ingresa tu Clave')
+#os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+os.environ['OPENAI_API_KEY'] = ke
 
 
 pdf = open('example.pdf', 'rb')
