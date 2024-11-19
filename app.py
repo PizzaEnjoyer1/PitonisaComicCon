@@ -25,6 +25,33 @@ import platform
 Expert=" "
 profile_imgenh=" "
 
+
+pdf = open('example.pdf', 'rb')
+
+pdf_reader = PyPDF2.PdfReader(pdf)
+text = ""
+for page in pdf_reader.pages:
+    text += page.extract_text()
+    
+text_splitter = CharacterTextSplitter(separator="\n",chunk_size=500,chunk_overlap=20,length_function=len)
+chunks = text_splitter.split_text(text)
+
+embeddings = OpenAIEmbeddings()
+knowledge_base = FAISS.from_texts(chunks, embeddings)
+
+st.subheader("Escribe que quieres saber sobre el documento")
+user_question = st.text_area(" ")
+    if user_question:
+        docs = knowledge_base.similarity_search(user_question)
+        llm = OpenAI(model_name="gpt-4o-mini")
+        chain = load_qa_chain(llm, chain_type="stuff")
+        with get_openai_callback() as cb:
+          response = chain.run(input_documents=docs, question=user_question)
+          print(cb)
+        st.write(response)
+
+
+
 def encode_image_to_base64(image_path):
     try:
         with open(image_path, "rb") as image_file:
