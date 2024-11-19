@@ -22,12 +22,6 @@ from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
 import platform
 
-# Definir la variable global 'full_response'
-full_response = ""
-
-Expert = " "
-profile_imgenh = " "
-
 def encode_image_to_base64(image_path):
     try:
         with open(image_path, "rb") as image_file:
@@ -52,40 +46,8 @@ with st.sidebar:
     fill_color = st.color_picker("Selecciona el color de relleno", "#000000")
     bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
 
-name = st.text_input("Aventurero, escribe tu nombre")
 
-st.text("Selecciona tu clase:")
-
-# Creamos 4 columnas para organizar los botones de forma horizontal
-col1, col2, col3, col4, col5 = st.columns(5)
-
-with col1:
-    if st.button("🛡️ Paladín"):
-        st.session_state.selected_class = "paladín"
-
-with col2:
-    if st.button("🧙 Mago"):
-        st.session_state.selected_class = "mago"
-
-with col3:
-    if st.button("🏹 Arquero"):
-        st.session_state.selected_class = "arquero"
-
-with col4:
-    if st.button("🗡️ Caballero"):
-        st.session_state.selected_class = "caballero"
-
-with col5:
-    if st.button("🩹 Curandero"):
-        st.session_state.selected_class = "curandero"
-
-# Mostrar el valor almacenado para confirmar la selección
-if st.session_state.get("selected_class", None) is not None and name != None:
-    st.write(f"{name}, has seleccionado: {st.session_state.selected_class}")
-else:
-    st.write("Por favor, escribe tu nombre")
-
-st.text("Dibuja el acompañante que tendrás en tu viaje")
+st.text("Escribe tu nombre, aventurero")
 
 canvas_result = st_canvas(
     fill_color=fill_color,
@@ -98,12 +60,12 @@ canvas_result = st_canvas(
     key="canvas",
 )
 
-#ke = st.text_input('Ingresa tu Clave')
-#os.environ['OPENAI_API_KEY'] = ke
-api_key = st.secrets['OPENAI_API_KEY']
+ke = st.text_input('Ingresa tu Clave')
+os.environ['OPENAI_API_KEY'] = ke
+#api_key = st.secrets['OPENAI_API_KEY']
 client = OpenAI(api_key=api_key)
 
-analyze_button = st.button("Crea tu historia", type="secondary")
+analyze_button = st.button("Descubre tu destino", type="secondary")
 
 def text_to_speech(text, lg):
     tts = gTTS(text, lang=lg)
@@ -124,7 +86,7 @@ def generate_story():
             input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
             input_image.save('img.png')
             base64_image = encode_image_to_base64("img.png")
-            prompt_text = (f"{name} es un/a {st.session_state.selected_class}. En la imagen, logras ver su compañero de aventuras. Con base a esta información, haz una historia fantástica ambientada en la edad media. Comienza la historia así: {name} es un/a {st.session_state.selected_class}. ")
+            prompt_text = (f"En la imagen, está en el nombre de una persona. Simplemente dilo")
 
             messages = [
                 {
@@ -157,7 +119,7 @@ def generate_story():
                             ],
                         }
                     ],
-                    max_tokens=500,  # Cambié el valor de max_tokens
+                    max_tokens=50,  # Cambié el valor de max_tokens
                 )
                 if response.choices[0].message.content is not None:
                     full_response = response.choices[0].message.content
