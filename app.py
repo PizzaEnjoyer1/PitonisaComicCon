@@ -98,8 +98,8 @@ canvas_result = st_canvas(
     key="canvas",
 )
 
-ke = st.text_input('Ingresa tu Clave')
-os.environ['OPENAI_API_KEY'] = ke
+#ke = st.text_input('Ingresa tu Clave')
+#os.environ['OPENAI_API_KEY'] = ke
 api_key = os.environ['OPENAI_API_KEY']
 client = OpenAI(api_key=api_key)
 
