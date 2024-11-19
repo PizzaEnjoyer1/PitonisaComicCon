@@ -7,6 +7,16 @@ import time
 import glob
 from gtts import gTTS
 from PIL import Image, ImageOps
+import PyPDF2
+from PyPDF2 import PdfReader
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.chains.question_answering import load_qa_chain
+from langchain.llms import OpenAI
+from langchain.callbacks import get_openai_callback
+import platform
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
