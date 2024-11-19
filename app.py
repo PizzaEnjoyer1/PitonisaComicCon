@@ -100,7 +100,7 @@ canvas_result = st_canvas(
 
 #ke = st.text_input('Ingresa tu Clave')
 #os.environ['OPENAI_API_KEY'] = ke
-api_key = os.environ['OPENAI_API_KEY']
+api_key = st.secrets['OPENAI_API_KEY']
 client = OpenAI(api_key=api_key)
 
 analyze_button = st.button("Crea tu historia", type="secondary")
