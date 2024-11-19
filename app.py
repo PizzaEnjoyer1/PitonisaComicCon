@@ -13,6 +13,25 @@ from langchain.callbacks import get_openai_callback
 import platform
 
 
+with st.sidebar:
+
+  st.title("Cambia los parámetros de tu canvas")
+  
+  drawing_mode = st.selectbox(
+    "Selecciona el modo de dibujo",
+    ("freedraw", "line", "transform", "rect", "circle")
+  )
+
+
+  stroke_width = st.slider("Grosor del pincel", 1, 100, 10)
+
+  stroke_color = st.color_picker("Selecciona el color de linea", "#000000")
+
+  fill_color = st.color_picker("Selecciona el color de relleno", "#000000")
+  
+  bg_color = st.color_picker("Selecciona el color del fondo", "#FFFFFF")
+
+
 #import pickle5 as pickle
 #from pathlib import Path
 
