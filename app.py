@@ -35,7 +35,10 @@ pdf_reader = PyPDF2.PdfReader(pdf)
 text = ""
 for page in pdf_reader.pages:
     text += page.extract_text()
-    
+
+
+st.write(text)
+
 text_splitter = CharacterTextSplitter(separator="\n",chunk_size=500,chunk_overlap=20,length_function=len)
 chunks = text_splitter.split_text(text)
 
