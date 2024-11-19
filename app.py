@@ -90,7 +90,7 @@ def generate_story():
             input_image = Image.fromarray(input_numpy_array.astype('uint8'), 'RGBA')
             input_image.save('img.png')
             base64_image = encode_image_to_base64("img.png")
-            prompt_text = (f"En la imagen, está en el nombre de una persona. Simplemente dime cómo se llama esa persona")
+            prompt_text = (f"Dime el texto que reconoces en la imagen")
 
             messages = [
                 {
