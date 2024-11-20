@@ -40,9 +40,12 @@ chunks = text_splitter.split_text(text)
 ke = st.text_input('Ingresa tu Clave')
 os.environ['OPENAI_API_KEY'] = ke
 
+api_key = os.environ['OPENAI_API_KEY']
+
 if st.button("xd"):
     embeddings = OpenAIEmbeddings()
     knowledge_base = FAISS.from_texts(chunks, embeddings)
+    client = OpenAI(api_key=api_key)
 
 
 Expert=" "
@@ -84,12 +87,6 @@ canvas_result = st_canvas(
     drawing_mode=drawing_mode,
     key="canvas",
 )
-
-ke = st.text_input('Ingresa tu Clave')
-os.environ['OPENAI_API_KEY'] = ke
-#api_key = st.secrets['OPENAI_API_KEY'
-api_key = os.environ['OPENAI_API_KEY']
-client = OpenAI(api_key=api_key)
 
 analyze_button = st.button("Descubre tu destino", type="secondary")
 
