@@ -23,6 +23,8 @@ from langchain.callbacks import get_openai_callback
 import platform
 
 
+st.set_page_config(page_title='Pitonisa Imperial')
+
 pdf = open('example.pdf', 'rb')
 
 pdf_reader = PyPDF2.PdfReader(pdf)
@@ -54,8 +56,7 @@ def encode_image_to_base64(image_path):
     except FileNotFoundError:
         return "Error: La imagen no se encontró en la ruta especificada."
 
-# Streamlit 
-st.set_page_config(page_title='Pitonisa Imperial')
+
 st.title('Pitonisa Imperial: Descubre tu destino')
 st.image("pitonisa.jpg")
 
