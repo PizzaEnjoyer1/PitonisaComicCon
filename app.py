@@ -27,6 +27,8 @@ api_key = st.secrets["API_KEY"]
 
 os.environ['OPENAI_API_KEY'] = api_key
 
+client = OpenAI(api_key=api_key)
+
 
 
 pdf = open('example.pdf', 'rb')
