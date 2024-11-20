@@ -38,7 +38,7 @@ chunks = text_splitter.split_text(text)
 ke = st.text_input('Ingresa tu Clave')
 os.environ['OPENAI_API_KEY'] = ke
 
-if st.button("xd")
+if st.button("xd"):
     embeddings = OpenAIEmbeddings()
     knowledge_base = FAISS.from_texts(chunks, embeddings)
 
