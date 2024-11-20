@@ -23,14 +23,6 @@ from langchain.callbacks import get_openai_callback
 import platform
 
 
-api_key = st.secrets["API_KEY"]
-
-os.environ['OPENAI_API_KEY'] = api_key
-
-
-
-
-
 pdf = open('example.pdf', 'rb')
 
 pdf_reader = PyPDF2.PdfReader(pdf)
@@ -42,8 +34,13 @@ for page in pdf_reader.pages:
 text_splitter = CharacterTextSplitter(separator="\n",chunk_size=500,chunk_overlap=20,length_function=len)
 chunks = text_splitter.split_text(text)
 
-embeddings = OpenAIEmbeddings()
-knowledge_base = FAISS.from_texts(chunks, embeddings)
+
+ke = st.text_input('Ingresa tu Clave')
+if ke is not None:
+    os.environ['OPENAI_API_KEY'] = ke
+    embeddings = OpenAIEmbeddings()
+    knowledge_base = FAISS.from_texts(chunks, embeddings)
+
 
 Expert=" "
 profile_imgenh=" "
