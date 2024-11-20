@@ -23,7 +23,9 @@ from langchain.callbacks import get_openai_callback
 import platform
 
 
-os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+api_key = st.secrets["API_KEY"]
+
+os.environ['OPENAI_API_KEY'] = api_key
 
 
 
